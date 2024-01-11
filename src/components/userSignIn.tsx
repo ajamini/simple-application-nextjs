@@ -1,11 +1,18 @@
 import React from 'react'
 
-function userSignIn() {
+const UserSignIn = () => {
   return (
     <div>
+      <form>
         
+        <input type='email' />
+        
+        <input type='password' />
+
+        <input type='submit'  />
+      </form>
     </div>
   )
 }
 
-export default userSignIn
+export default UserSignIn
