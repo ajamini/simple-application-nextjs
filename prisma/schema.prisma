@@ -14,21 +14,35 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-//schemas for sign in
+
+//models for sign in
+
+enum Roletype{
+    agent
+    client
+    brokerage
+}
+enum Statustype{
+    conected
+    inactive
+    disconected
+}
 
 model users {
     id                  String      @id @default(cuid())
     name                String
     email               String      @unique
     mobile              String      @unique
-    status              String
+    status              Statustype
     default_profile     Json
     verified            Boolean
     last_login          DateTime    @updatedAt
-    secret_hash         String
+    secret_hash         Int
+    role                Roletype
 }
 
 model user_password_history{
     id                  String      @id @default(cuid())
     secret_hash         String    
 }
+

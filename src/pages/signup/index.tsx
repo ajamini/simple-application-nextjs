@@ -1,7 +1,8 @@
 import React from 'react';
-import UserSignIn from '~/components/UserSignIn';
+import UserSignIn from '~/components/UserSignUp';
 
 function index() {
+  
   return (
     <main>
         <UserSignIn />

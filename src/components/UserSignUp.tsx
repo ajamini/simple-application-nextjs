@@ -1,6 +1,6 @@
 import React from 'react'
 
-const UserSignIn = () => {
+const UserSignUp = () => {
   return (
     <div>
       <form>
@@ -15,4 +15,4 @@ const UserSignIn = () => {
   )
 }
 
-export default UserSignIn
+export default UserSignUp
