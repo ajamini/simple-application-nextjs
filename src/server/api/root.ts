@@ -6,7 +6,7 @@ import { signUpRouter } from "./routers/signUp";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  signUp: signUpRouter,
+  signUp: signUpRouter
 });
 
 // export type definition of API

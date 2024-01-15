@@ -18,6 +18,7 @@ datasource db {
 //models for sign in
 
 enum Roletype{
+    unverified
     agent
     client
     brokerage
@@ -30,7 +31,7 @@ enum Statustype{
 
 model users {
     id                  String      @id @default(cuid())
-    name                String
+    name                String      
     email               String      @unique
     mobile              String      @unique
     status              Statustype
@@ -43,6 +44,6 @@ model users {
 
 model user_password_history{
     id                  String      @id @default(cuid())
-    secret_hash         String    
+    secret_hash         Int    
 }
 
