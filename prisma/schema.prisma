@@ -2,48 +2,68 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-    // Further reading:
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
+  // Further reading:
+  // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
+  // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
+  url      = env("DATABASE_URL")
 }
-
 
 //models for sign in
 
-enum Roletype{
-    unverified
-    agent
-    client
-    brokerage
+enum Roletype {
+  unverified
+  agent
+  client
+  brokerage
 }
-enum Statustype{
-    conected
-    inactive
-    disconected
+
+enum Statustype {
+  conected
+  inactive
+  disconected
 }
+
+//some of these fields need to be changed to Init, which also affects the logic that is used in routers/signUp.ts
 
 model users {
-    id                  String      @id @default(cuid())
-    name                String      
-    email               String      @unique
-    mobile              String      @unique
-    status              Statustype
-    default_profile     Json
-    verified            Boolean
-    last_login          DateTime    @updatedAt
-    secret_hash         Int
-    role                Roletype
+  id               String                  @id @default(cuid())
+  name             String
+  email            String                  @unique
+  mobile           String                  @unique
+  default_profile  Json
+  verified         Boolean
+  last_login       DateTime                @updatedAt
+  secret_hash      Int
+  role             Roletype
+  sessions         user_sessions[]
+  password_history user_password_history[]
 }
 
-model user_password_history{
-    id                  String      @id @default(cuid())
-    secret_hash         Int    
+model user_password_history {
+  id          String  @id @default(cuid())
+  secret_hash Int
+  users       users?  @relation(fields: [usersId], references: [id])
+  usersId     String
 }
 
+//this model is necesary to create a new session
+
+model user_sessions {
+  id                 String     @id @default(cuid())
+  token              String
+  expire             DateTime
+  profile            Boolean
+  device_name        Int
+  last_activity_time Int
+  ip                 Int
+  geo_location       Int
+  status             Statustype
+  users              users?     @relation(fields: [usersId], references: [id])
+  usersId            String?
+}

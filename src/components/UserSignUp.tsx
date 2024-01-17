@@ -7,21 +7,33 @@ const UserSignUp = () => {
   const [email, setEmail] = useState("");
   const [secret_hash, setSecret_hash] = useState("");
   const [mobile, setMobile] = useState("")  
+
+  //Use SingUp to create a new user
   const signUpMutation = api.signUp.createUser.useMutation()
+
+  //create a new user
+
     function usercreate(){
-      signUpMutation.mutate({
-        name,
-        secret_hash, 
-        email,
-        mobile
-      })
-    }
+       signUpMutation.mutate({
+          name,
+          secret_hash, 
+          email,
+          mobile
+        })
+      }
+      
   return (
     <div>
       <form onSubmit={ (e) => {
-        e.preventDefault()
+       
+       //After you send the form data, the frontend will redirect you to the next form to update the extra data
+       e.preventDefault()
         usercreate()
-      }}>
+       
+        window.location.href = "/";
+       
+       
+       }}>
 
         <input 
           type='text'
